@@ -1,4 +1,5 @@
 import React from 'react';
+import { StyleSheet, Text, View, Button, Image } from 'react-native';
 import Question from './Question';
 import Author from './Author';
 import Actionbar from './Actionbar';
@@ -11,37 +12,37 @@ export default function Game(props) {
 
     return (
         <>
-            <div className='row mt-5'>
-                <div className='col-6'>
+            <View className='row mt-5'>
+                <View className='col-6'>
                     {(() => {
                         if (!props.quiz.attachment || props.quiz.attachment == null) {
                             return (
-                                <img src="notfound.jpg" className="img-thumbnail imagen" alt="question image" />
+                                <Image source="notfound.jpg" />
                             )
                         } else {
                             return (
-                                <img src={props.quiz.attachment.url} className="img-thumbnail imagen" alt="question image" />
+                                <Image source={props.quiz.attachment.url} />
                             )
                         }
                     })()}
-                </div>
-                <div className='col-6'>
-                    <div className='col-12 text-center my-3'>
+                </View>
+                <View className='col-6'>
+                    <View className='col-12 text-center my-3'>
                         <Question question={props.quiz.question} number={props.number} />
-                    </div>
-                    <div className='col-12 text-center'>
+                    </View>
+                    <View className='col-12 text-center'>
                         <Answer resultado={props.resultado} input={props.input} />
-                    </div>
-                    <div className='col-12 text-center'>
+                    </View>
+                    <View className='col-12 text-center'>
                         <Timer horas={props.horas} minutos={props.minutos} segundos={props.segundos}/>
-                    </div> 
-                </div>
-            </div>
-            <div className='row mt-1'>
-                <div className='col-6'>
+                    </View> 
+                </View>
+            </View>
+            <View className='row mt-1'>
+                <View className='col-6'>
                     <Author author={props.quiz.author} />
-                </div>
-                <div className='col-6 text-center'>
+                </View>
+                <View className='col-6 text-center'>
                     <Actionbar
                         previous={props.previous} previousDisabled={props.previousDisabled}
                         next={props.next} nextDisabled={props.nextDisabled}
@@ -50,8 +51,8 @@ export default function Game(props) {
                         pista={props.pista}
                         contadorPistas={props.contadorPistas}
                     />
-                </div>
-            </div>
+                </View>
+            </View>
         </>
 
     );

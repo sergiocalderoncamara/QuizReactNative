@@ -5,7 +5,10 @@ export default function Actionbar(props) {
     return (
         <View style={styles.navbar}>
             <TouchableHighlight style={styles.navbar_boton} onPress={() => props.navegar('TicTacToe')}>
-                <Text style={styles.navbar_boton_text}>TicTacToe</Text>
+                <Text style={styles.navbar_boton_text}>TicTacToe</Text> 
+            </TouchableHighlight>
+            <TouchableHighlight style={styles.navbar_boton} onPress={() => props.navegar('Quiz')}>
+                <Text style={styles.navbar_boton_text}>Quiz</Text>
             </TouchableHighlight>
         </View>
     );

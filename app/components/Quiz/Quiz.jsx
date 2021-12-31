@@ -1,6 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import Game from '../Quiz/Game';
 import Shortcut from '../Quiz/Shortcut';
+import { getAPI } from "../../../api";
 
 const horasTimer = 0;
 const minutosTimer = 10;
@@ -18,8 +20,264 @@ export default function Quiz(props) {
     const [contadorPistas, setContadorPistas] = useState(3);
     const [horas, setHoras] = useState(horasTimer);
     const [minutos, setMinutos] = useState(minutosTimer);
-    const [segundos, setSegundos] = useState(segundosTimer); 
-    const lang = useContext(LangContext);
+    const [segundos, setSegundos] = useState(segundosTimer);
+    const [quizzes, setQuizzes] = useState([{
+		"id": 18,
+		"question": "Capital of Cyprus",
+		"answer": "Nicosia",
+		"author": {
+			"id": 1,
+			"isAdmin": true,
+			"username": "admin",
+			"accountTypeId": 0,
+			"profileId": null,
+			"profileName": null,
+			"photo": {
+				"filename": "spg072.jpg",
+				"mime": "image/jpeg",
+				"url": "https://core.dit.upm.es/uploads/91712eceb48a55c134e80c8f38e955711cbeda8d59b19192fb75f945fcb0fb60"
+			}
+		},
+		"attachment": {
+			"filename": "capitals/Nicosia.jpg",
+			"mime": "image/jpeg",
+			"url": "https://core.dit.upm.es/uploads/capitals/Nicosia.jpg"
+		},
+		"favourite": false
+	},
+	{
+		"id": 6,
+		"question": "Capital of Germany",
+		"answer": "Berlin",
+		"author": {
+			"id": 1,
+			"isAdmin": true,
+			"username": "admin",
+			"accountTypeId": 0,
+			"profileId": null,
+			"profileName": null,
+			"photo": {
+				"filename": "spg072.jpg",
+				"mime": "image/jpeg",
+				"url": "https://core.dit.upm.es/uploads/91712eceb48a55c134e80c8f38e955711cbeda8d59b19192fb75f945fcb0fb60"
+			}
+		},
+		"attachment": {
+			"filename": "capitals/Berlin.jpg",
+			"mime": "image/jpeg",
+			"url": "https://core.dit.upm.es/uploads/capitals/Berlin.jpg"
+		},
+		"favourite": false
+	},
+	{
+		"id": 5,
+		"question": "Capital of Russia",
+		"answer": "Moscow",
+		"author": {
+			"id": 1,
+			"isAdmin": true,
+			"username": "admin",
+			"accountTypeId": 0,
+			"profileId": null,
+			"profileName": null,
+			"photo": {
+				"filename": "spg072.jpg",
+				"mime": "image/jpeg",
+				"url": "https://core.dit.upm.es/uploads/91712eceb48a55c134e80c8f38e955711cbeda8d59b19192fb75f945fcb0fb60"
+			}
+		},
+		"attachment": {
+			"filename": "capitals/Moscow.jpg",
+			"mime": "image/jpeg",
+			"url": "https://core.dit.upm.es/uploads/capitals/Moscow.jpg"
+		},
+		"favourite": false
+	},
+	{
+		"id": 25,
+		"question": "Capital of Egypt",
+		"answer": "Cairo",
+		"author": {
+			"id": 1,
+			"isAdmin": true,
+			"username": "admin",
+			"accountTypeId": 0,
+			"profileId": null,
+			"profileName": null,
+			"photo": {
+				"filename": "spg072.jpg",
+				"mime": "image/jpeg",
+				"url": "https://core.dit.upm.es/uploads/91712eceb48a55c134e80c8f38e955711cbeda8d59b19192fb75f945fcb0fb60"
+			}
+		},
+		"attachment": {
+			"filename": "capitals/Cairo.jpg",
+			"mime": "image/jpeg",
+			"url": "https://core.dit.upm.es/uploads/capitals/Cairo.jpg"
+		},
+		"favourite": false
+	},
+	{
+		"id": 11,
+		"question": "Capital of Canada",
+		"answer": "Ottawa",
+		"author": {
+			"id": 1,
+			"isAdmin": true,
+			"username": "admin",
+			"accountTypeId": 0,
+			"profileId": null,
+			"profileName": null,
+			"photo": {
+				"filename": "spg072.jpg",
+				"mime": "image/jpeg",
+				"url": "https://core.dit.upm.es/uploads/91712eceb48a55c134e80c8f38e955711cbeda8d59b19192fb75f945fcb0fb60"
+			}
+		},
+		"attachment": {
+			"filename": "capitals/Ottawa.jpg",
+			"mime": "image/jpeg",
+			"url": "https://core.dit.upm.es/uploads/capitals/Ottawa.jpg"
+		},
+		"favourite": false
+	},
+	{
+		"id": 29,
+		"question": "Capital of Finland",
+		"answer": "Helsinki",
+		"author": {
+			"id": 1,
+			"isAdmin": true,
+			"username": "admin",
+			"accountTypeId": 0,
+			"profileId": null,
+			"profileName": null,
+			"photo": {
+				"filename": "spg072.jpg",
+				"mime": "image/jpeg",
+				"url": "https://core.dit.upm.es/uploads/91712eceb48a55c134e80c8f38e955711cbeda8d59b19192fb75f945fcb0fb60"
+			}
+		},
+		"attachment": {
+			"filename": "capitals/Helsinki.jpg",
+			"mime": "image/jpeg",
+			"url": "https://core.dit.upm.es/uploads/capitals/Helsinki.jpg"
+		},
+		"favourite": false
+	},
+	{
+		"id": 22,
+		"question": "Capital of Latvia",
+		"answer": "Riga",
+		"author": {
+			"id": 1,
+			"isAdmin": true,
+			"username": "admin",
+			"accountTypeId": 0,
+			"profileId": null,
+			"profileName": null,
+			"photo": {
+				"filename": "spg072.jpg",
+				"mime": "image/jpeg",
+				"url": "https://core.dit.upm.es/uploads/91712eceb48a55c134e80c8f38e955711cbeda8d59b19192fb75f945fcb0fb60"
+			}
+		},
+		"attachment": {
+			"filename": "capitals/Riga.jpg",
+			"mime": "image/jpeg",
+			"url": "https://core.dit.upm.es/uploads/capitals/Riga.jpg"
+		},
+		"favourite": false
+	},
+	{
+		"id": 36,
+		"question": "Capital of Italy",
+		"answer": "Rome",
+		"author": {
+			"id": 1,
+			"isAdmin": true,
+			"username": "admin",
+			"accountTypeId": 0,
+			"profileId": null,
+			"profileName": null,
+			"photo": {
+				"filename": "spg072.jpg",
+				"mime": "image/jpeg",
+				"url": "https://core.dit.upm.es/uploads/91712eceb48a55c134e80c8f38e955711cbeda8d59b19192fb75f945fcb0fb60"
+			}
+		},
+		"attachment": {
+			"filename": "capitals/Rome.jpg",
+			"mime": "image/jpeg",
+			"url": "https://core.dit.upm.es/uploads/capitals/Rome.jpg"
+		},
+		"favourite": false
+	},
+	{
+		"id": 34,
+		"question": "Capital of Portugal",
+		"answer": "Lisbon",
+		"author": {
+			"id": 1,
+			"isAdmin": true,
+			"username": "admin",
+			"accountTypeId": 0,
+			"profileId": null,
+			"profileName": null,
+			"photo": {
+				"filename": "spg072.jpg",
+				"mime": "image/jpeg",
+				"url": "https://core.dit.upm.es/uploads/91712eceb48a55c134e80c8f38e955711cbeda8d59b19192fb75f945fcb0fb60"
+			}
+		},
+		"attachment": {
+			"filename": "capitals/Lisbon.jpg",
+			"mime": "image/jpeg",
+			"url": "https://core.dit.upm.es/uploads/capitals/Lisbon.jpg"
+		},
+		"favourite": false
+	},
+	{
+		"id": 19,
+		"question": "Capital of Azerbaijan",
+		"answer": "Baku",
+		"author": {
+			"id": 1,
+			"isAdmin": true,
+			"username": "admin",
+			"accountTypeId": 0,
+			"profileId": null,
+			"profileName": null,
+			"photo": {
+				"filename": "spg072.jpg",
+				"mime": "image/jpeg",
+				"url": "https://core.dit.upm.es/uploads/91712eceb48a55c134e80c8f38e955711cbeda8d59b19192fb75f945fcb0fb60"
+			}
+		},
+		"attachment": {
+			"filename": "capitals/Baku.jpg",
+			"mime": "image/jpeg",
+			"url": "https://core.dit.upm.es/uploads/capitals/Baku.jpg"
+		},
+		"favourite": false
+	}
+]);
+
+    const download = async () => {
+      let downloadedQuizzes = await getAPI();
+      setQuizzes(downloadedQuizzes);
+    }
+  
+    useEffect(() => {
+      async function fetchData() {
+        try {
+          await download();
+        } catch (error) {
+          alert("error");
+        }
+      }
+      fetchData();
+    }, []); 
 
     const tictac = () => {
         if (horas === 0 && minutos === 0 && segundos === 0) 
@@ -71,7 +329,7 @@ export default function Quiz(props) {
         if (indice <= 0) {
             setPreviousDisabled(true);
             setNextDisabled(false);
-        } else if (indice >= props.quizzes.length - 1) {
+        } else if (indice >= quizzes.length - 1) {
             setPreviousDisabled(false);
             setNextDisabled(true);
         } else {
@@ -115,8 +373,8 @@ export default function Quiz(props) {
     const pista = () => {
         let copia = contadorPistas;
         if (copia > 0) {
-            setInputValue(props.quizzes[currentQuiz].answer);
-            recogerAnswer(props.quizzes[currentQuiz].answer);
+            setInputValue(quizzes[currentQuiz].answer);
+            recogerAnswer(quizzes[currentQuiz].answer);
             copia--;
             console.log(copia);
         }
@@ -124,31 +382,29 @@ export default function Quiz(props) {
     }
 
     return (
-        <main>
+        <View>
             {(() => {
                 if (finished) {
                     return (
                         <>
-                            <h3 className='display-3'>{lang.dictionary["score"]}: {score}</h3>
-                            <div>
-                                <button type="button" className="btn btn-lg btn-primary" onClick={quizDownload2}>
-                                    {lang.dictionary['reset']}
-                                </button>
-                            </div>
+                            <Text className='display-3'>score: {score}</Text>
+                            <View>
+                                <Button title='Reset' onClick={quizDownload2} />
+                            </View>
                         </>
                     )
                 } else {
                     return (
                         <>
-                            <div className='row mt-2'>
-                                <div className='col-12 btn-group' role="group" aria-label="Basic outlined example">
-                                    {props.quizzes.map((quiz, index) =>
+                            <View className='row mt-2'>
+                                <View className='col-12 btn-group' role="group" aria-label="Basic outlined example">
+                                    {quizzes.map((quiz, index) =>
                                         <Shortcut key={index} number={index} indice={indice} contestado={answers[index]}/>
                                     )}
-                                </div>
-                            </div>
+                                </View>
+                            </View>
                             <Game
-                                quiz={props.quizzes[currentQuiz]}
+                                quiz={quizzes[currentQuiz]}
                                 number={currentQuiz}
                                 previous={previous} previousDisabled={previousDisabled}
                                 next={next} nextDisabled={nextDisabled}
@@ -164,6 +420,6 @@ export default function Quiz(props) {
                 }
             })()}
 
-        </main>
+        </View>
     );
 }

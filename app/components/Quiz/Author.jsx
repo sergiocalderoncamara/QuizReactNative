@@ -1,9 +1,7 @@
 import React, {useContext} from "react";
-import { LangContext } from '../GameScreen';
+import { StyleSheet, Text, View, Button, Image } from 'react-native';
 
 export default function Author (props) {
-
-    const lang = useContext(LangContext);
 
     return (
         <>
@@ -11,22 +9,22 @@ export default function Author (props) {
                     if (!props.author || props.author == null) {
                         return(
                             <>
-                            {lang.dictionary['unknown']}
-                            <img src="notfound.jpg" className="author rounded-circle" alt="foto" /> 
+                            <Text>unknown</Text>
+                            <Image source={ require ('../../../assets/notfound.jpg')} />
                             </>
                         )
                     } else if (!props.author.username || props.author.username == null) {
                         return (
                             <>
-                            {lang.dictionary['unknown']}
-                            <img src={props.author.photo.url} className="author rounded-circle" alt={props.author.photo.filename} />
+                            <Text>unknown</Text>
+                            <Image source={props.author.photo.url} />
                             </>
                         )
                     } else {
                         return (
                             <>
-                            {props.author.username}
-                            <img src={props.author.photo.url} className="author rounded-circle" alt={props.author.photo.filename} />
+                            <Text>{props.author.username}</Text>
+                            <Image source={props.author.photo.url} />
                             </>
                         )
                     }

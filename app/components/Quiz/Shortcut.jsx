@@ -1,4 +1,5 @@
 import React from "react";
+import { StyleSheet, Text, View, Button } from 'react-native';
 
 
 export default function Shortcut(props) {
@@ -14,11 +15,11 @@ export default function Shortcut(props) {
             {(() => {
                 if (props.contestado !== '') {
                     return (
-                        <button type="button" className="btn btn-outline-warning" onClick={seleccion}>{props.number + 1}</button>
+                        <Button title="" onClick={seleccion}/>
                     )
                 } else {
                     return (
-                        <button type="button" className="btn btn-outline-primary" onClick={seleccion}>{props.number + 1}</button>
+                        <Button title="" onClick={seleccion}/>
                     )
                 }
             })()}
