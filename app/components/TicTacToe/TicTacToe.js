@@ -14,9 +14,9 @@ export default function App(props) {
     ['-', '-', '-'],
     ['-', '-', '-'],
     ['-', '-', '-']
-    ]);
+  ]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     async function fetchData() {
       const res = await fetch("http://myjson.dit.upm.es/api/bins/ccr5");
       const myjson = await res.json();
@@ -27,18 +27,18 @@ export default function App(props) {
     }
 
     fetchData();
-  }, []);
+  }, []);*/
 
   function appClick(rowNumber, columnNumber) {
-      let valuesCopy = JSON.parse(JSON.stringify(values));
-      let newMovement = turn === PLAYERX ? 'X' : '0';
-      valuesCopy[rowNumber][columnNumber] = newMovement;
-      setTurn(turn === PLAYERX ? PLAYER0 : PLAYERX);
-      setValues(valuesCopy);
-      setMoves(moves + 1); 
+    let valuesCopy = JSON.parse(JSON.stringify(values));
+    let newMovement = turn === PLAYERX ? 'X' : '0';
+    valuesCopy[rowNumber][columnNumber] = newMovement;
+    setTurn(turn === PLAYERX ? PLAYER0 : PLAYERX);
+    setValues(valuesCopy);
+    setMoves(moves + 1);
   }
 
-  function resetClick(){
+  function resetClick() {
     setTurn(PLAYERX);
     setMoves(0);
     setValues([
@@ -48,14 +48,14 @@ export default function App(props) {
     ]);
   }
 
-  
+
   let text = "Turn of " + turn;
 
   return (
-    <View style={{flex:1, margin: 30}}>
-      <Header text={text}/>
-      <Board values={values}  appClick={appClick}/>
-      <Text style={{fontSize: 25, padding: 30, textAlign:'center'}}>Number of moves: {moves}</Text>
+    <View style={{ flex: 1, margin: 30 }}>
+      <Header text={text} />
+      <Board values={values} appClick={appClick} />
+      <Text style={{ fontSize: 25, padding: 30, textAlign: 'center' }}>Number of moves: {moves}</Text>
       <Reset resetClick={resetClick}></Reset>
     </View>
   );

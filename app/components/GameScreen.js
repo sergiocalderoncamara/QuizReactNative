@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
-import TicTacToe from './TicTacToe/TicTacToe'
+import { View, StyleSheet, Text } from 'react-native';
 import { getAPI } from "../../api";
+import { StatusBar } from 'expo-status-bar';
+import Actionbar from './Actionbar';
 
-
-function App(props) {
+export default function GameScreen(props) {
 
   const [quizzes, setQuizzes] = useState([]);
 
@@ -26,11 +26,21 @@ function App(props) {
 
   return (
     <>
-        <View>
-            <TicTacToe />
-        </View>
+      <View style={styles.container}>
+        <Actionbar navegar={props.navigation.navigate} />
+        <Text>Estás en Home</Text>
+        <StatusBar style="auto" />
+      </View>
     </>
   );
 }
 
-export default App;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
