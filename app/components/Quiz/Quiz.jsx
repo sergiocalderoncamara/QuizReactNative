@@ -381,7 +381,7 @@ export default function Quiz(props) {
 	}
 
 	return (
-		<View>
+		<View style={styles.container}>
 			{(() => {
 				if (finished) {
 					return (
@@ -431,9 +431,7 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: '#fff',
-		alignItems: 'center',
 		justifyContent: 'center',
-		flexDirection: 'row',
 	},
 	fixToText: {
 		flexDirection: 'row',

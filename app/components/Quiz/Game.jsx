@@ -11,9 +11,9 @@ export default function Game(props) {
 
     return (
         <>
-            <ScrollView>
-                <View style={styles.container}>
-                    <View >
+            <ScrollView style={styles.container}>
+                <View>
+                    <View style={{ alignItems: 'center' }}>
                         {(() => {
                             if (!props.quiz.attachment || props.quiz.attachment == null || props.quiz.attachment.url == null) {
                                 return (
@@ -22,12 +22,16 @@ export default function Game(props) {
                             } else {
                                 return (
                                     <Image style={styles.image} source={{
-                                        uri: `${props.quiz.attachment.url}`}} />
+                                        uri: `${props.quiz.attachment.url}`
+                                    }} />
                                 )
                             }
                         })()}
                     </View>
                     <View >
+                        <View >
+                            <Author author={props.quiz.author} />
+                        </View>
                         <View >
                             <Question question={props.quiz.question} number={props.number} />
                         </View>
@@ -39,20 +43,15 @@ export default function Game(props) {
                         </View>
                     </View>
                 </View>
-                <View style={styles.container}>
-                    <View >
-                        <Author author={props.quiz.author} />
-                    </View>
-                    <View >
-                        <Actionbar
-                            previous={props.previous} previousDisabled={props.previousDisabled}
-                            next={props.next} nextDisabled={props.nextDisabled}
-                            comprobar={props.comprobar}
-                            gameDownload2={props.quizDownload2}
-                            pista={props.pista}
-                            contadorPistas={props.contadorPistas}
-                        />
-                    </View>
+                <View>
+                    <Actionbar
+                        previous={props.previous} previousDisabled={props.previousDisabled}
+                        next={props.next} nextDisabled={props.nextDisabled}
+                        comprobar={props.comprobar}
+                        gameDownload2={props.quizDownload2}
+                        pista={props.pista}
+                        contadorPistas={props.contadorPistas}
+                    />
                 </View>
             </ScrollView>
         </>
@@ -64,12 +63,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        margin: 10,
     },
     image: {
-        width: 100,
-        height: 100,
-        resizeMode: 'contain'
+        width: 350,
+        height: 350,
+        resizeMode: 'contain',
     }
 });

@@ -4,14 +4,13 @@ import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 export default function Answer(props) {
 
     const handleInputChange = (event) => {
-        props.resultado(event.target.value);
+        props.resultado(event);
     }
 
     return (
         <>
             <View style={styles.container}>
-                <Text>Answer</Text>
-                <TextInput style={styles.input} value={props.input} placeholder="Write your answer" onChange={handleInputChange} />
+                <TextInput style={styles.input} value={props.input} placeholder="Write your answer" onChangeText={handleInputChange} />
             </View>
         </>
     );

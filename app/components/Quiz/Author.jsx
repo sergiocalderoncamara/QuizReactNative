@@ -1,52 +1,58 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, View, Button, Image } from 'react-native';
 
-export default function Author (props) {
+export default function Author(props) {
 
     return (
         <>
-        {(() => {
+            <View style={styles.container}>
+                {(() => {
                     if (!props.author || props.author == null) {
-                        return(
+                        return (
                             <>
-                            <Text>unknown</Text>
-                            <Image style={styles.image} source={ require ('../../../assets/notfound.jpg')} />
+                                <Text style={styles.autor}>unknown</Text>
+                                <Image style={styles.image} source={require('../../../assets/notfound.jpg')} />
                             </>
                         )
                     } else if (!props.author.username || props.author.username == null) {
                         return (
                             <>
-                            <Text>unknown</Text>
-                            <Image style={styles.image} source={{
-                                        uri: `${props.author.photo.url}`
-                                        }} />
+                                <Text style={styles.autor}>unknown</Text>
+                                <Image style={styles.image} source={{
+                                    uri: `${props.author.photo.url}`
+                                }} />
                             </>
                         )
                     } else {
                         return (
                             <>
-                            <Text>{props.author.username}</Text>
-                            <Image style={styles.image} source={{
-                                        uri: `${props.author.photo.url}`
-                                        }} />
+                                <Text style={styles.autor}>{props.author.username}</Text>
+                                <Image style={styles.image} source={{
+                                    uri: `${props.author.photo.url}`
+                                }} />
                             </>
                         )
                     }
-                })()}        
+                })()}
+            </View>
         </>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
+        flexDirection: 'row',
+        marginTop: 10,
     },
     image: {
-        width: 100,
-        height: 100,
-        resizeMode: 'contain'
+        width: 30,
+        height: 30,
+        resizeMode: 'contain',
+        borderRadius: 1000,
+    },
+    autor: {
+        marginRight: 5,
     }
 });
