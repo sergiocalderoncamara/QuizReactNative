@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
+import { View, StyleSheet, Text, ImageBackground } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import Actionbar from './Actionbar';
 
@@ -8,10 +8,11 @@ export default function GameScreen(props) {
   return (
     <>
       <View style={styles.container}>
-        <Actionbar navegar={props.navigation.navigate} />
-        <Text>Estás en Home</Text>
-        <Image style={styles.image} source={require('../../assets/minijuegos.jpg')} />
-        <StatusBar style="auto" />
+        <ImageBackground style={styles.image} resizeMode='cover' source={require('../../assets/fondo.jpg')}>
+          <Actionbar navegar={props.navigation.navigate} />
+          <Text style={styles.text}>Welcome to My Games</Text>
+          <StatusBar style="auto" />
+        </ImageBackground>
       </View>
     </>
   );
@@ -21,14 +22,17 @@ export default function GameScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   image: {
     flex: 1,
-    width: 400,
-    height: 400,
-    resizeMode: 'contain'
+    justifyContent: "center"
+  },
+  text: {
+    color: "white",
+    fontSize: 20,
+    lineHeight: 84,
+    fontWeight: "bold",
+    textAlign: "center",
+    backgroundColor: "#00000090"
   }
 });

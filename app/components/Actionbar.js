@@ -31,7 +31,7 @@ export default function Actionbar(props) {
         backgroundColor: 'tomato',
         color: 'white',
         borderWidth: 3,
-        borderColor: 'black',
+        borderColor: '#ffffffcf',
         fontSize: 25,
         textAlign: 'center'
     },
