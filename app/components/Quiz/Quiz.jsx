@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import Game from '../Quiz/Game';
 import Shortcut from '../Quiz/Shortcut';
 import { getAPI } from "../../../api";
@@ -10,18 +10,18 @@ const segundosTimer = 0;
 
 export default function Quiz(props) {
 
-    const [score, setScore] = useState(0);
-    const [finished, setFinished] = useState(false);
-    const [currentQuiz, setCurrentQuiz] = useState(0);
-    const [previousDisabled, setPreviousDisabled] = useState(true);
-    const [nextDisabled, setNextDisabled] = useState(false);
-    const [answers, setAnswers] = useState(['', '', '', '', '', '', '', '', '', '']);
-    const [inputValue, setInputValue] = useState("");
-    const [contadorPistas, setContadorPistas] = useState(3);
-    const [horas, setHoras] = useState(horasTimer);
-    const [minutos, setMinutos] = useState(minutosTimer);
-    const [segundos, setSegundos] = useState(segundosTimer);
-    const [quizzes, setQuizzes] = useState([{
+	const [score, setScore] = useState(0);
+	const [finished, setFinished] = useState(false);
+	const [currentQuiz, setCurrentQuiz] = useState(0);
+	const [previousDisabled, setPreviousDisabled] = useState(true);
+	const [nextDisabled, setNextDisabled] = useState(false);
+	const [answers, setAnswers] = useState(['', '', '', '', '', '', '', '', '', '']);
+	const [inputValue, setInputValue] = useState("");
+	const [contadorPistas, setContadorPistas] = useState(3);
+	const [horas, setHoras] = useState(horasTimer);
+	const [minutos, setMinutos] = useState(minutosTimer);
+	const [segundos, setSegundos] = useState(segundosTimer);
+	const [quizzes, setQuizzes] = useState([{
 		"id": 18,
 		"question": "Capital of Cyprus",
 		"answer": "Nicosia",
@@ -261,165 +261,198 @@ export default function Quiz(props) {
 		},
 		"favourite": false
 	}
-]);
+	]);
 
-    const download = async () => {
-      let downloadedQuizzes = await getAPI();
-      setQuizzes(downloadedQuizzes);
-    }
-  
-    useEffect(() => {
-      async function fetchData() {
-        try {
-          await download();
-        } catch (error) {
-          alert("error");
-        }
-      }
-      fetchData();
-    }, []); 
+	const download = async () => {
+		let downloadedQuizzes = await getAPI();
+		setQuizzes(downloadedQuizzes);
+	}
 
-    const tictac = () => {
-        if (horas === 0 && minutos === 0 && segundos === 0) 
-            comprobar();
-        else if (minutos === 0 && segundos === 0) {
-            setHoras(horas - 1);
-            setMinutos(59);
-            setSegundos(59);
-        } else if (segundos === 0) {
-            setMinutos(minutos - 1);
-            setSegundos(59);
-        } else {
-            setSegundos(segundos - 1);
-        }
-    }
+	useEffect(() => {
+		async function fetchData() {
+			try {
+				await download();
+			} catch (error) {
+				alert("error");
+			}
+		}
+		fetchData();
+	}, []);
 
-    useEffect(() => {
-        if(finished === false){
-            const timerId = setInterval(() => tictac(), 1000);
-            return () => clearInterval(timerId);     
-        }else{
-            return
-        }
-    });
+	const tictac = () => {
+		if (horas === 0 && minutos === 0 && segundos === 0)
+			comprobar();
+		else if (minutos === 0 && segundos === 0) {
+			setHoras(horas - 1);
+			setMinutos(59);
+			setSegundos(59);
+		} else if (segundos === 0) {
+			setMinutos(minutos - 1);
+			setSegundos(59);
+		} else {
+			setSegundos(segundos - 1);
+		}
+	}
 
-    const previous = () => {
-        let id = currentQuiz;
-        id--;
-        setCurrentQuiz(id);
-        control(id);
-        setInputValue(answers[id]);
-    }
+	useEffect(() => {
+		if (finished === false) {
+			const timerId = setInterval(() => tictac(), 1000);
+			return () => clearInterval(timerId);
+		} else {
+			return
+		}
+	});
 
-    const next = () => {
-        let id = currentQuiz;
-        id++;
-        setCurrentQuiz(id);
-        control(id);
-        setInputValue(answers[id]);
-    }
+	const previous = () => {
+		let id = currentQuiz;
+		id--;
+		setCurrentQuiz(id);
+		control(id);
+		setInputValue(answers[id]);
+	}
 
-    const indice = (indice) => {
-        setCurrentQuiz(indice);
-        control(indice);
-        setInputValue(answers[indice]);
-    }
+	const next = () => {
+		let id = currentQuiz;
+		id++;
+		setCurrentQuiz(id);
+		control(id);
+		setInputValue(answers[id]);
+	}
 
-    const control = (indice) => {
-        if (indice <= 0) {
-            setPreviousDisabled(true);
-            setNextDisabled(false);
-        } else if (indice >= quizzes.length - 1) {
-            setPreviousDisabled(false);
-            setNextDisabled(true);
-        } else {
-            setPreviousDisabled(false);
-            setNextDisabled(false);
-        }
-    }
+	const indice = (indice) => {
+		setCurrentQuiz(indice);
+		control(indice);
+		setInputValue(answers[indice]);
+	}
 
-    const recogerAnswer = (resultado) => {
-        let copia = answers;
-        copia.splice(currentQuiz, 1, resultado);
-        setAnswers(copia);
-        setInputValue(resultado);
-    }
+	const control = (indice) => {
+		if (indice <= 0) {
+			setPreviousDisabled(true);
+			setNextDisabled(false);
+		} else if (indice >= quizzes.length - 1) {
+			setPreviousDisabled(false);
+			setNextDisabled(true);
+		} else {
+			setPreviousDisabled(false);
+			setNextDisabled(false);
+		}
+	}
 
-    const comprobar = () => {
-        let c = 0;
-        props.quizzes.forEach((element, index) => {
-            if (element.answer.toLowerCase() === answers[index].toLowerCase()) {
-                c++;
-            }
-        });
-        setScore(c);
-        setFinished(true);
-        setAnswers(['', '', '', '', '', '', '', '', '', ''])
-    }
+	const recogerAnswer = (resultado) => {
+		let copia = answers;
+		copia.splice(currentQuiz, 1, resultado);
+		setAnswers(copia);
+		setInputValue(resultado);
+	}
 
-    const quizDownload2 = () => {
-        props.appDownload2();
-        control(0);
-        setFinished(false);
-        setScore(0);
-        setCurrentQuiz(0);
-        setInputValue("");
-        setContadorPistas(3);
-        setHoras(horasTimer);
-        setMinutos(minutosTimer);
-        setSegundos(segundosTimer);
-    }
+	const comprobar = () => {
+		let c = 0;
+		quizzes.forEach((element, index) => {
+			if (element.answer.toLowerCase() === answers[index].toLowerCase()) {
+				c++;
+			}
+		});
+		setScore(c);
+		setFinished(true);
+		setAnswers(['', '', '', '', '', '', '', '', '', ''])
+	}
 
-    const pista = () => {
-        let copia = contadorPistas;
-        if (copia > 0) {
-            setInputValue(quizzes[currentQuiz].answer);
-            recogerAnswer(quizzes[currentQuiz].answer);
-            copia--;
-            console.log(copia);
-        }
-        setContadorPistas(copia);
-    }
+	const quizDownload2 = () => {
+		download();
+		control(0);
+		setFinished(false);
+		setScore(0);
+		setCurrentQuiz(0);
+		setInputValue("");
+		setContadorPistas(3);
+		setHoras(horasTimer);
+		setMinutos(minutosTimer);
+		setSegundos(segundosTimer);
+	}
 
-    return (
-        <View>
-            {(() => {
-                if (finished) {
-                    return (
-                        <>
-                            <Text className='display-3'>score: {score}</Text>
-                            <View>
-                                <Button title='Reset' onClick={quizDownload2} />
-                            </View>
-                        </>
-                    )
-                } else {
-                    return (
-                        <>
-                            <View className='row mt-2'>
-                                <View className='col-12 btn-group' role="group" aria-label="Basic outlined example">
-                                    {quizzes.map((quiz, index) =>
-                                        <Shortcut key={index} number={index} indice={indice} contestado={answers[index]}/>
-                                    )}
-                                </View>
-                            </View>
-                            <Game
-                                quiz={quizzes[currentQuiz]}
-                                number={currentQuiz}
-                                previous={previous} previousDisabled={previousDisabled}
-                                next={next} nextDisabled={nextDisabled}
-                                resultado={recogerAnswer}
-                                input={inputValue}
-                                comprobar={comprobar}
-                                quizDownload2={quizDownload2}
-                                pista={pista}
-                                contadorPistas={contadorPistas}
-                                horas={horas} minutos={minutos} segundos={segundos} />
-                        </>
-                    )
-                }
-            })()}
+	const pista = () => {
+		let copia = contadorPistas;
+		if (copia > 0) {
+			setInputValue(quizzes[currentQuiz].answer);
+			recogerAnswer(quizzes[currentQuiz].answer);
+			copia--;
+		}
+		setContadorPistas(copia);
+	}
 
-        </View>
-    );
+	return (
+		<View>
+			{(() => {
+				if (finished) {
+					return (
+						<>
+							<Text style={styles.score}>Score: {score}</Text>
+							<View>
+								<TouchableHighlight style={styles.button} onPress={quizDownload2}>
+									<Text style={styles.textoBoton}>
+										Reset
+									</Text>
+								</TouchableHighlight>
+							</View>
+						</>
+					)
+				} else {
+					return (
+						<>
+							<View >
+								<View style={styles.fixToText}>
+									{quizzes.map((quiz, index) =>
+										<Shortcut key={index} number={index} indice={indice} contestado={answers[index]} />
+									)}
+								</View>
+							</View>
+							<Game
+								quiz={quizzes[currentQuiz]}
+								number={currentQuiz}
+								previous={previous} previousDisabled={previousDisabled}
+								next={next} nextDisabled={nextDisabled}
+								resultado={recogerAnswer}
+								input={inputValue}
+								comprobar={comprobar}
+								quizDownload2={quizDownload2}
+								pista={pista}
+								contadorPistas={contadorPistas}
+								horas={horas} minutos={minutos} segundos={segundos} />
+
+						</>
+					)
+				}
+			})()}
+
+		</View>
+	);
 }
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: '#fff',
+		alignItems: 'center',
+		justifyContent: 'center',
+		flexDirection: 'row',
+	},
+	fixToText: {
+		flexDirection: 'row',
+		justifyContent: 'space-evenly',
+		marginTop: 10,
+		backgroundColor: 'white',
+	},
+	button: {
+        alignItems: "center",
+        backgroundColor: "tomato",
+        padding: 10,
+      },
+      textoBoton: {
+          color: '#ffffff'
+      },
+	  score: {
+			fontStyle: 'italic',
+			fontSize: 50,
+			color: '#141823',
+			textAlign: 'center'
+	  },
+})

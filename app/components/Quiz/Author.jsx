@@ -10,21 +10,25 @@ export default function Author (props) {
                         return(
                             <>
                             <Text>unknown</Text>
-                            <Image source={ require ('../../../assets/notfound.jpg')} />
+                            <Image style={styles.image} source={ require ('../../../assets/notfound.jpg')} />
                             </>
                         )
                     } else if (!props.author.username || props.author.username == null) {
                         return (
                             <>
                             <Text>unknown</Text>
-                            <Image source={props.author.photo.url} />
+                            <Image style={styles.image} source={{
+                                        uri: `${props.author.photo.url}`
+                                        }} />
                             </>
                         )
                     } else {
                         return (
                             <>
                             <Text>{props.author.username}</Text>
-                            <Image source={props.author.photo.url} />
+                            <Image style={styles.image} source={{
+                                        uri: `${props.author.photo.url}`
+                                        }} />
                             </>
                         )
                     }
@@ -32,3 +36,17 @@ export default function Author (props) {
         </>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    image: {
+        width: 100,
+        height: 100,
+        resizeMode: 'contain'
+    }
+});

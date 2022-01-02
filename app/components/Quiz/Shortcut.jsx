@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, SafeAreaView, TouchableHighlight } from 'react-native';
 
 
 export default function Shortcut(props) {
@@ -12,17 +12,37 @@ export default function Shortcut(props) {
 
     return (
         <>
-            {(() => {
-                if (props.contestado !== '') {
-                    return (
-                        <Button title="" onClick={seleccion}/>
-                    )
-                } else {
-                    return (
-                        <Button title="" onClick={seleccion}/>
-                    )
-                }
-            })()}
+                {(() => {
+                    if (props.contestado !== '') {
+                        return (
+                            <TouchableHighlight style={styles.button} onPress={seleccion}>
+                                <Text style={styles.numeros}>
+                                    {(numeroRespuesta+1).toString()}
+                                </Text>
+                            </TouchableHighlight>
+                        )
+                    } else {
+                        return (
+                            <TouchableHighlight style={styles.button} onPress={seleccion}>
+                                <Text style={styles.numeros}>
+                                    {(numeroRespuesta+1).toString()}
+                                </Text>
+                            </TouchableHighlight>
+                        )
+                    }
+                })()}
+
         </>
     );
 }
+
+const styles = StyleSheet.create({
+    button: {
+      alignItems: "center",
+      backgroundColor: "tomato",
+      padding: 10,
+    },
+    numeros: {
+        color: '#ffffff'
+    },
+  });

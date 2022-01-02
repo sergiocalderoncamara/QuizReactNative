@@ -9,10 +9,25 @@ export default function Answer(props) {
 
     return (
         <>
-            <View className="input-group mb-3">
-                <Text>answer</Text>
-                <TextInput type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="respuesta" value={props.input} onChange={handleInputChange}/>
+            <View style={styles.container}>
+                <Text>Answer</Text>
+                <TextInput style={styles.input} value={props.input} placeholder="Write your answer" onChange={handleInputChange} />
             </View>
         </>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
+    },
+    input: {
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+    },
+});

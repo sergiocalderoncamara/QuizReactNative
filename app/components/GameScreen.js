@@ -8,9 +8,9 @@ export default function GameScreen(props) {
   return (
     <>
       <View style={styles.container}>
-        <Actionbar navegar={props.navigation.navigate}/>
+        <Actionbar navegar={props.navigation.navigate} />
         <Text>Estás en Home</Text>
-        <Image style={styles.image} source={ require ('../../assets/minijuegos.jpg')} /> 
+        <Image style={styles.image} source={require('../../assets/minijuegos.jpg')} />
         <StatusBar style="auto" />
       </View>
     </>
@@ -30,5 +30,5 @@ const styles = StyleSheet.create({
     width: 400,
     height: 400,
     resizeMode: 'contain'
-}
+  }
 });
