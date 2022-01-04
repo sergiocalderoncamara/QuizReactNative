@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import React from "react";
+import { StyleSheet, View, TextInput } from 'react-native';
 
 export default function Answer(props) {
 

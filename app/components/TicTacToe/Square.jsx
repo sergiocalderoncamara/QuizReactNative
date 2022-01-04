@@ -30,10 +30,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    borderColor: 'black',
-    backgroundColor: '#eee'
+    borderColor: 'white',
+    backgroundColor: 'tomato'
   },
   squareText: {
+    color: 'white',
     fontSize: 60
   }
 

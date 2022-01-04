@@ -51,6 +51,9 @@ export default function Game(props) {
                         gameDownload2={props.quizDownload2}
                         pista={props.pista}
                         contadorPistas={props.contadorPistas}
+                        save={props.save}
+                        load={props.load}
+                        remove={props.remove}
                     />
                 </View>
             </ScrollView>

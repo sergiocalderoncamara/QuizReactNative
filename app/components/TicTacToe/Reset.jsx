@@ -7,21 +7,28 @@ export default function Reset(props) {
   }
 
   return (
-    <TouchableHighlight onPress={click} >
-      <Text style={styles.button}>Reset</Text>
+    <TouchableHighlight style={styles.button} onPress={click} >
+      <Text style={styles.textButton}>Reset</Text>
     </TouchableHighlight>
   );
 
 }
 
 const styles = StyleSheet.create({
-  button: {
-    borderWidth: 1,
-    borderColor: 'black',
-    backgroundColor: '#eee',
+  textButton: {
+    color: 'white',
     fontSize: 25,
-    textAlign: 'center',
-    padding: 10
+    textAlign: 'center'
+  },
+  button: {
+    padding: 15,
+    margin: 10,
+    backgroundColor: 'tomato',
+    color: 'white',
+    borderWidth: 3,
+    borderColor: '#ffffffcf',
+    fontSize: 25,
+    textAlign: 'center'
   }
 
 });

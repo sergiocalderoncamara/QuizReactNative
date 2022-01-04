@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { StyleSheet, Text, View, Button, Image } from 'react-native';
+import React from "react";
+import { StyleSheet, Text, View, Image } from 'react-native';
 
 export default function Author(props) {
 

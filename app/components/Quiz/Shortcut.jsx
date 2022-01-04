@@ -15,7 +15,7 @@ export default function Shortcut(props) {
                 {(() => {
                     if (props.contestado !== '') {
                         return (
-                            <TouchableHighlight style={styles.button} onPress={seleccion}>
+                            <TouchableHighlight style={styles.buttonRespondido} onPress={seleccion}>
                                 <Text style={styles.numeros}>
                                     {(numeroRespuesta+1).toString()}
                                 </Text>
@@ -45,4 +45,9 @@ const styles = StyleSheet.create({
     numeros: {
         color: '#ffffff'
     },
+    buttonRespondido: {
+        alignItems: "center",
+        backgroundColor: "#7f69a5",
+        padding: 10,
+      },
   });

@@ -6,7 +6,7 @@ import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
 export default function Actionbar(props) {
 
     return (
-        <>
+        <View>
             <View style={styles.fixToText}>
                 <TouchableOpacity style={styles.button} onPress={props.previous} disabled={props.previousDisabled}>
                     <Text style={styles.texto}>
@@ -25,7 +25,7 @@ export default function Actionbar(props) {
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={props.pista}>
                     <Text style={styles.texto}>
-                        Clue
+                        Clue: {props.contadorPistas}
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={props.comprobar}>
@@ -34,14 +34,31 @@ export default function Actionbar(props) {
                     </Text>
                 </TouchableOpacity>
             </View>
-        </>
+            <View style={styles.fixToText}>
+                <TouchableOpacity style={styles.button} onPress={props.save}>
+                    <Text style={styles.texto}>
+                        Save
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={props.load}>
+                    <Text style={styles.texto}>
+                        Load
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={props.remove}>
+                    <Text style={styles.texto}>
+                        Remove
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     fixToText: {
         flexDirection: 'row',
-        justifyContent: 'space-evenly',
+        justifyContent: "center",//'space-evenly',
         marginTop: 10,
         backgroundColor: 'white',
     },

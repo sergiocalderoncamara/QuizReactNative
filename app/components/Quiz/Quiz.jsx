@@ -1,8 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
-import Game from '../Quiz/Game';
-import Shortcut from '../Quiz/Shortcut';
+import { Alert, StyleSheet, Text, View, TouchableHighlight } from 'react-native';
+import Game from './Game';
+import Shortcut from './Shortcut';
 import { getAPI } from "../../../api";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const horasTimer = 0;
 const minutosTimer = 10;
@@ -362,8 +363,9 @@ export default function Quiz(props) {
 		control(0);
 		setFinished(false);
 		setScore(0);
-		setCurrentQuiz(0);
 		setInputValue("");
+		setAnswers(['', '', '', '', '', '', '', '', '', '']);
+		setCurrentQuiz(0);
 		setContadorPistas(3);
 		setHoras(horasTimer);
 		setMinutos(minutosTimer);
@@ -378,6 +380,81 @@ export default function Quiz(props) {
 			copia--;
 		}
 		setContadorPistas(copia);
+	}
+
+
+	const save = async () => {
+		try {
+			var quizzesStringified = JSON.stringify(quizzes);
+			await AsyncStorage.setItem('@P5_2021_IWEB:quiz', quizzesStringified);
+			console.log('Saving succesfully'); 
+
+			alert(
+				"¡Quizzes guardados con éxito!",
+				[
+				{text: 'OK', onPress: () => console.log('OK pressed')},
+				],
+				{ cancelable: false }
+			);
+		}catch (error){ 
+			console.log('Error saving data'); 
+		}
+	}
+
+	const load = async () => {
+		try {
+			var JSONquizzesStoraged = await AsyncStorage.getItem('@P5_2021_IWEB:quiz');
+			if(JSONquizzesStoraged !== null){
+				var quizzesStoraged = JSON.parse(JSONquizzesStoraged);
+				setQuizzes(quizzesStoraged);
+				console.log('Loading succesfully');
+
+				control(0);
+				setFinished(false);
+				setScore(0);
+				setInputValue("");
+				setAnswers(['', '', '', '', '', '', '', '', '', '']);
+				setCurrentQuiz(0);
+				setContadorPistas(3);
+				setHoras(horasTimer);
+				setMinutos(minutosTimer);
+				setSegundos(segundosTimer);
+
+				alert(
+					"¡Quizzes cargados con éxito!",
+					[
+					{text: 'OK', onPress: () => console.log('OK pressed')},
+					],
+					{ cancelable: false }
+				);
+			}else{
+				alert(
+					"Fallo al cargar los quizzes. No hay quizzes guardados.",
+					[
+					{text: 'OK', onPress: () => console.log('OK pressed')},
+					],
+					{ cancelable: false }
+				);
+			}
+		}catch (error){ 
+			console.log('Error loading data'); 
+		}
+	}
+
+	const remove = async () => {
+		try{
+			await AsyncStorage.clear()
+			console.log('Removing succesfully'); 
+			alert(
+				"¡Quizzes borrados con éxito!",
+				[
+				{text: 'OK', onPress: () => console.log('OK pressed')},
+				],
+				{ cancelable: false }
+			);
+		}catch(error){
+			console.log('Error removing data');
+		}
 	}
 
 	return (
@@ -417,7 +494,10 @@ export default function Quiz(props) {
 								quizDownload2={quizDownload2}
 								pista={pista}
 								contadorPistas={contadorPistas}
-								horas={horas} minutos={minutos} segundos={segundos} />
+								horas={horas} minutos={minutos} segundos={segundos}
+								save={save}
+								load={load}
+								remove={remove} />
 
 						</>
 					)
