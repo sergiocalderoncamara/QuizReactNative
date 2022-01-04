@@ -10,6 +10,9 @@ export default function Actionbar(props) {
             <TouchableHighlight style={styles.navbar_boton} onPress={() => props.navegar('Quiz')}>
                 <Text style={styles.navbar_boton_text}>Quiz</Text>
             </TouchableHighlight>
+            <TouchableHighlight style={styles.navbar_boton} onPress={() => props.navegar('Pokedex')}>
+                <Text style={styles.navbar_boton_text}>Pokedex</Text>
+            </TouchableHighlight>
         </View>
     );
   }
